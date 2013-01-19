@@ -5,12 +5,12 @@ async   = require 'async'
 debug   = require 'debug'
 request = require 'request'
 _       = require 'underscore'
+config  = require './config'
 
 SOURCE =
   pathname: '/sbs777/bible/text'
   protocol: 'http:'
   host:  'atschool.eduweb.co.uk'
-DEST = 'data'
 
 debug = debug('download')
 
@@ -20,13 +20,12 @@ getUrl = (bookId) ->
 
 fetchBook = (bookId, callback) ->
   debug 'fetching', getUrl(bookId)
-  bookOutlet = fs.createWriteStream(path.join(DEST, "#{bookId}.txt"))
+  bookOutlet = fs.createWriteStream(path.join(config.TEXT_ROOT, "#{bookId}.txt"))
   request.get(getUrl(bookId)).pipe(bookOutlet)
   bookOutlet.on('close', callback)
 
 ########################################
-bookIds = [ 'genesis' ]
-async.map bookIds, fetchBook, (err, res) ->
+async.map config.BOOK_IDS, fetchBook, (err, res) ->
   throw new Error(err) if err
   debug 'done'
 ########################################

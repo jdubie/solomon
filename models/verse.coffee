@@ -4,7 +4,9 @@
 mongoose = require 'mongoose'
 
 verseSchema = new mongoose.Schema
-  number: Number
+  book: String
+  chapter: Number
+  verse: Number
   body: String
 
 module.exports = mongoose.model('Verse', verseSchema)
