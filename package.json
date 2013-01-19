@@ -1,9 +1,12 @@
 {
-  "name": "solomon",
+  "name"   : "solomon",
   "version": "0.0.1",
   "dependencies": {
-    "mongoose": "latest",
-    "coffee-script": "latest",
-    "async": "latest"
+    "mongoose"      : "latest",
+    "coffee-script" : "latest",
+    "async"         : "latest",
+    "debug"         : "latest",
+    "request"       : "latest",
+    "underscore"    : "latest"
   }
 }

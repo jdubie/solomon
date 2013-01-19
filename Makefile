@@ -1,7 +1,8 @@
-run: wipe, load
-
 wipe:
 	coffee wipe
 
-load:
-	coffee load
+upload:
+	DEBUG=upload coffee upload
+
+download:
+	DEBUG=download coffee download
