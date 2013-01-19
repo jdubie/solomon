@@ -8,6 +8,7 @@
     "debug"         : "latest",
     "request"       : "latest",
     "underscore"    : "latest",
-    "solr-client"   : "latest"
+    "solr-client"   : "latest",
+    "express"       : "latest"
   }
 }
