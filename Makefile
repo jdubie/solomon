@@ -1,8 +1,8 @@
 wipe:
-	coffee wipe
+	NODE_PATH=. DEBUG=wipe coffee tasks/wipe
 
 upload:
-	DEBUG=upload coffee upload
+	NODE_PATH=. DEBUG=upload coffee tasks/upload
 
 download:
-	DEBUG=download coffee download
+	NODE_PATH=. DEBUG=download coffee tasks/download

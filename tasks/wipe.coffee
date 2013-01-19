@@ -1,9 +1,9 @@
 async = require 'async'
-config = require './config'
+config = require 'config'
 
-Book    = require './models/book'
-Chapter = require './models/chapter'
-Verse   = require './models/verse'
+Book    = require 'models/book'
+Chapter = require 'models/chapter'
+Verse   = require 'models/verse'
 
 models = [Book, Chapter, Verse]
 

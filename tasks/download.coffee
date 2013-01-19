@@ -5,7 +5,7 @@ async   = require 'async'
 debug   = require 'debug'
 request = require 'request'
 _       = require 'underscore'
-config  = require './config'
+config  = require 'config'
 
 SOURCE =
   pathname: '/sbs777/bible/text'

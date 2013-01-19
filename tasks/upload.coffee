@@ -3,8 +3,8 @@ path   = require 'path'
 debug  = require 'debug'
 async  = require 'async'
 _      = require 'underscore'
-config = require './config'
-Verse  = require './models/verse'
+config = require 'config'
+Verse  = require 'models/verse'
 
 debug = debug('upload')
 
