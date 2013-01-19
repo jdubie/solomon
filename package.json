@@ -7,6 +7,7 @@
     "async"         : "latest",
     "debug"         : "latest",
     "request"       : "latest",
-    "underscore"    : "latest"
+    "underscore"    : "latest",
+    "solr-client"   : "latest"
   }
 }
