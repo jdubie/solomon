@@ -12,3 +12,6 @@ solr-wipe:
 
 solr-load:
 	NODE_PATH=. DEBUG=solr* coffee tasks/solr_load
+
+server:
+	NODE_PATH=. DEBUG=server coffee server
