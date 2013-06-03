@@ -4,6 +4,7 @@
 mongoose = require 'mongoose'
 
 bookSchema = new mongoose.Schema
-  title: String
+  book: String
+  slug: String
 
 module.exports = mongoose.model('Book', bookSchema)

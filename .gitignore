@@ -1,2 +1,4 @@
-npm-log.debug
 node_modules/
+run/
+
+npm-log.debug

@@ -1,22 +1,28 @@
 express = require 'express'
+process.env.DEBUG = '*'
 debug   = require 'debug'
 path    = require 'path'
 config  = require './config'
 goose   = require './goose'
+
 
 debug = debug('server')
 
 app = express()
 app.use express.static('public')
 app.use (req, res, next) ->
-  debug "#{req.method} #{req.path}", req.query
+  #debug "#{req.method} #{req.path}", req.query
+  console.log "#{req.method} #{req.path}", req.query
   next()
 
 config.db.connect()
 
+app.get '/', (req, res) ->
+  res.end('pong')
+
 app.get '/books/:slug', (req, res) ->
-  book = req.params.slug
-  goose.getBook {book}, (err, book) ->
+  {slug} = req.params
+  goose.getBook {slug}, (err, book) ->
     res.json(book)
 
 app.get '/books', (req, res) ->
@@ -24,9 +30,12 @@ app.get '/books', (req, res) ->
     res.json(books)
 
 app.get '/chapters/:slug', (req, res) ->
-  [book, chapter] = req.params.slug.split('_')
-  goose.getChapter {book, chapter}, (err, chapter) ->
-    res.json(chapter)
+  [slug, chapter] = req.params.slug.split('_')
+  goose.getBook {slug}, (err, book) ->
+    book.chapter = chapter
+    res.json(book)
+  #goose.getChapter {book, chapter}, (err, chapter) ->
+  #  res.json(chapter)
 
 app.get '/chapters', (req, res) ->
   {book} = req.query

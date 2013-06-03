@@ -15,7 +15,8 @@ parseBook = (bookContent) ->
   bookContent = bookContent.split('\r').join('')
   bookContent = bookContent.split('\n')
 
-  titleExp = /^[A-Z]+$/
+  titleExp = /^(?:[1-9A-Z\.]+ *)+[ ]*$/
+  console.log bookContent[0..4]
   book = _(bookContent).find (line) ->
     line.match(titleExp)
   book = book.toLowerCase()

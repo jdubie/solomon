@@ -1,12 +1,12 @@
 debug    = require 'debug'
 mongoose = require 'mongoose'
 _        = require 'underscore'
+Verse    = require './models/verse'
+Book     = require './models/book'
 
-schema = new mongoose.Schema({ book: 'string', chapter: 'number', verse: 'number', body: 'string' })
-Verse = mongoose.model('Verse', schema)
 
-exports.getBook = ({book}, callback) ->
-  Verse.findOne {book}, (err, verse) ->
+exports.getBook = ({slug}, callback) ->
+  Book.findOne {slug}, (err, verse) ->
     callback(err, verse)
 
 exports.getChapter = ({book, chapter}, callback) ->
@@ -17,16 +17,11 @@ exports.getVerse   = ({book, chapter, verse}, callback) ->
   # TODO for API
 
 exports.getBooks = ({}, callback) ->
-  Verse.find {}, (err, verses) ->
-    books = verses.map (verse) -> verse.book
-    books = _(books).uniq()
-    books = books.map (book) ->
-      slug: book.toLowerCase()
-      book: book.toUpperCase()[0] + book[1..]
-    callback(err, books)
+  Book.find {}, _id: 0, book: 1, slug: 1, (err, books) ->
+    callback(null, books)
 
 exports.getChapters = ({book}, callback) ->
-  Verse.find {book}, (err, verses) ->
+  Verse.find {slug: book}, (err, verses) ->
     chapters = verses.map (verse) -> verse.chapter
     chapters = _(chapters).sortBy(_.identity)
     chapters = _(chapters).uniq()
@@ -36,7 +31,7 @@ exports.getChapters = ({book}, callback) ->
 
 exports.getVerses = ({book, chapter}, callback) ->
   Verse
-    .find({book, chapter})
+    .find({slug: book, chapter})
     .sort('verse')
     .exec (err, verses) ->
       verses = verses.map ({verse, body}) ->

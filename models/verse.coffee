@@ -8,6 +8,7 @@ verseSchema = new mongoose.Schema
   chapter: Number
   verse: Number
   body: String
+  slug: String
 
 verseSchema.methods.toSolr = () ->
   id          : @_id
