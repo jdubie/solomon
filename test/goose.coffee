@@ -3,9 +3,9 @@ config = require '../config'
 goose = require '../goose'
 
 modelKeys =
-  book: ['slug', 'book']
-  #chapter: ['slug']
-  #verse:
+  book:    ['slug', 'book']
+  chapter: ['slug', 'number']
+  verse:   ['slug', 'number', 'body']
 
 describe 'goose', ->
   
@@ -15,12 +15,9 @@ describe 'goose', ->
 
   describe '#getBook', ->
     it 'should return correct fields', (done) ->
-      goose.getBook slug: 'genesis', (err, book) ->
+      goose.getBook book: 'genesis', (err, book) ->
         should.not.exist(err)
-        book = book.toJSON()
-        book.should.have.keys(modelKeys.book)
-        book.should.have.property('slug', 'genesis')
-        book.should.have.property('book', 'Genesis')
+        testGenesis(book)
         done()
 
   describe '#getBooks', ->
@@ -28,40 +25,61 @@ describe 'goose', ->
       goose.getBooks {}, (err, books) ->
         should.not.exist(err)
         books.should.have.length 49 # TODO should actually be longer
-        book = books[0].toJSON()
-        book.should.have.keys(modelKeys.book)
+        book = books[0]
+        testGenesis(book)
         done()
- 
-  #exports.getChapter = ({slug, chapter}, callback) ->
-  #  Verse.findOne {slug, chapter}, (err, verse) ->
-  #    callback(err, verse)
-  #
-  #exports.getVerse   = ({book, chapter, verse}, callback) ->
-  #  # TODO for API
-  #
-  #exports.getBooks = ({}, callback) ->
-  #  Book.find {}, _id: 0, book: 1, slug: 1, (err, books) ->
-  #    callback(null, books)
-  #
-  #exports.getChapters = ({book}, callback) ->
-  #  Verse.find {slug: book}, (err, verses) ->
-  #    chapters = verses.map (verse) -> verse.chapter
-  #    chapters = _(chapters).sortBy(_.identity)
-  #    chapters = _(chapters).uniq()
-  #    chapters = chapters.map (chapter) ->
-  #      {book, chapter, slug: "#{book}_#{chapter}"}
-  #    callback(err, chapters)
-  #
-  #exports.getVerses = ({book, chapter}, callback) ->
-  #  Verse
-  #    .find({slug: book, chapter})
-  #    .sort('verse')
-  #    .exec (err, verses) ->
-  #      verses = verses.map ({verse, body}) ->
-  #        {slug: "#{book}_#{chapter}_#{verse}", body, chapter, verse, body}
-  #        #{slug: "#{book}_#{chapter}_#{verse}", body, chapter}
-  #      callback(err, verses)
+
+  describe '#getChapter', ->
+    it 'should return correct fields', (done) ->
+      goose.getChapter book: 'genesis', chapter: 1, (err, chapter) ->
+        should.not.exist(err)
+        testGenesis_1(chapter)
+        done()
+
+  describe '#getChapters', ->
+    it 'should return correct fields', (done) ->
+      goose.getChapters book: 'genesis', (err, chapters) ->
+        chapters.should.have.length 50
+        chapter = chapters[0]
+        testGenesis_1(chapter)
+        done()
+
+  describe '#getVerse', ->
+    it 'should return correct fields', (done) ->
+      goose.getVerse book: 'genesis', chapter: 1, verse: 1, (err, verse) ->
+        testGenesis_1_1(verse)
+        done()
+
+  describe '#getVerses', ->
+    it 'should return correct fields', (done) ->
+      goose.getVerses book: 'genesis', chapter: 1, (err, verses) ->
+        should.not.exist(err)
+        verses.should.have.length 31
+        verse = verses[0]
+        testGenesis_1_1(verse)
+        done()
 
   after (done) ->
     config.db.disconnect()
     done()
+
+
+#
+# private helpers
+#
+
+testGenesis = (book) ->
+  book.should.have.keys(modelKeys.book)
+  book.should.have.property('slug', 'genesis')
+  book.should.have.property('book', 'Genesis')
+
+testGenesis_1 = (chapter) ->
+  chapter.should.have.keys(modelKeys.chapter)
+  chapter.should.have.property('slug', 'genesis_1')
+  chapter.should.have.property('number', 1)
+
+testGenesis_1_1 = (verse) ->
+  verse.should.have.keys(modelKeys.verse)
+  verse.should.have.property('slug', 'genesis_1_1')
+  verse.should.have.property('number', 1)
+  verse.should.have.property('body', 'In the beginning God created the heaven and the earth.')
