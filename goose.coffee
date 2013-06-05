@@ -28,7 +28,7 @@ exports.getChapters = ({book}, callback) ->
     chapters = _(chapters).sortBy(_.identity)
     chapters = _(chapters).uniq()
     chapters = chapters.map (chapter) ->
-      {book, chapter, slug: "#{book}_#{chapter}"}
+      {number: chapter, slug: "#{book}_#{chapter}"}
     callback(err, chapters)
 
 exports.getVerse = ({book, chapter, verse}, callback) ->
