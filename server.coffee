@@ -31,11 +31,8 @@ app.get '/books', (req, res) ->
 
 app.get '/chapters/:slug', (req, res) ->
   [slug, chapter] = req.params.slug.split('_')
-  goose.getBook {slug}, (err, book) ->
-    book.chapter = chapter
-    res.json(book)
-  #goose.getChapter {book, chapter}, (err, chapter) ->
-  #  res.json(chapter)
+  goose.getChapter {slug, chapter}, (err, chapter) ->
+    res.json(chapter)
 
 app.get '/chapters', (req, res) ->
   {book} = req.query

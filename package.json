@@ -10,5 +10,9 @@
     "underscore": "~1.4.4",
     "solr-client": "latest",
     "express": "latest"
+  },
+  "devDependencies": {
+    "mocha": "~1.10.0",
+    "should": "~1.2.2"
   }
 }

@@ -6,19 +6,19 @@ Book     = require './models/book'
 
 
 exports.getBook = ({slug}, callback) ->
-  Book.findOne {slug}, (err, verse) ->
+  Book.findOne {slug}, _id: 0, slug: 1, book: 1, (err, verse) ->
     callback(err, verse)
-
-exports.getChapter = ({book, chapter}, callback) ->
-  Verse.findOne {book, chapter}, (err, verse) ->
-    callback(err, verse)
-
-exports.getVerse   = ({book, chapter, verse}, callback) ->
-  # TODO for API
 
 exports.getBooks = ({}, callback) ->
   Book.find {}, _id: 0, book: 1, slug: 1, (err, books) ->
     callback(null, books)
+
+exports.getChapter = ({slug, chapter}, callback) ->
+  Verse.findOne {slug, chapter}, (err, verse) ->
+    callback(err, verse)
+
+exports.getVerse   = ({book, chapter, verse}, callback) ->
+  # TODO for API
 
 exports.getChapters = ({book}, callback) ->
   Verse.find {slug: book}, (err, verses) ->

@@ -1,3 +1,7 @@
+test:
+	./node_modules/.bin/mocha \
+		--compilers coffee:coffee-script
+
 wipe:
 	NODE_PATH=. DEBUG=wipe coffee tasks/wipe.coffee
 
@@ -21,3 +25,6 @@ rename:
 
 upload-books:
 	NODE_PATH=. DEBUG=upload* coffee tasks/upload_books.coffee
+
+
+.PHONY: test
