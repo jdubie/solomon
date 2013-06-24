@@ -3,8 +3,8 @@ config = require '../config'
 goose = require '../goose'
 
 modelKeys =
-  book:    ['slug', 'book']
-  chapter: ['slug', 'number']
+  book:    ['slug', 'book', 'test', 'klass']
+  chapter: ['slug', 'number', 'book']
   verse:   ['slug', 'number', 'body']
 
 describe 'goose', ->
@@ -24,7 +24,7 @@ describe 'goose', ->
     it 'should return correct fields', (done) ->
       goose.getBooks {}, (err, books) ->
         should.not.exist(err)
-        books.should.have.length 49 # TODO should actually be longer
+        books.should.have.length 66 # TODO should actually be longer
         book = books[0]
         testGenesis(book)
         done()

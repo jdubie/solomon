@@ -1,12 +1,20 @@
+all: wipe upload rename upload_books order_books
+
 test:
 	./node_modules/.bin/mocha \
 		--compilers coffee:coffee-script
+
+order_books:
+	NODE_PATH=. DEBUG=order* coffee tasks/order_books.coffee
 
 wipe:
 	NODE_PATH=. DEBUG=wipe coffee tasks/wipe.coffee
 
 upload:
 	NODE_PATH=. DEBUG=upload coffee tasks/upload.coffee
+
+upload_books:
+	coffee tasks/upload_books.coffee
 
 download:
 	NODE_PATH=. DEBUG=download coffee tasks/download.coffee

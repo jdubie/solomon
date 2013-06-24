@@ -26,6 +26,8 @@ fetchBook = (bookId, callback) ->
 
 ########################################
 async.map config.BOOK_IDS, fetchBook, (err, res) ->
-  throw new Error(err) if err
+  if err
+    throw new Error(err)
+  else
   debug 'done'
 ########################################

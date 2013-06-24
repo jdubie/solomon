@@ -16,12 +16,12 @@ parseBook = (bookContent) ->
   bookContent = bookContent.split('\n')
 
   titleExp = /^(?:[1-9A-Z\.]+ *)+[ ]*$/
-  console.log bookContent[0..4]
+  #console.log bookContent[0..4]
   book = _(bookContent).find (line) ->
     line.match(titleExp)
   book = book.toLowerCase()
 
-  verseExp = /^([0-9]+):([0-9]+): (.+)$/
+  verseExp = /^ ?([0-9]+):([0-9]+): (.+)$/
   verses = _(bookContent).filter (line) ->
     line.match(verseExp)
   _(verses).map (line) ->

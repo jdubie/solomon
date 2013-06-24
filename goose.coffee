@@ -4,19 +4,24 @@ _        = require 'underscore'
 Verse    = require './models/verse'
 Book     = require './models/book'
 
+debug = debug('goose')
+
+bookFields = _id: 0, __v: 0, index: 0
 
 exports.getBook = ({book}, callback) ->
-  Book.findOne {slug: book}, _id: 0, slug: 1, book: 1, (err, verse) ->
-    callback(err, verse.toJSON())
+  Book.findOne({slug: book}, bookFields).lean().exec(callback)
 
 exports.getBooks = ({}, callback) ->
-  Book.find {}, _id: 0, book: 1, slug: 1, (err, books) ->
-    books = books.map (book) -> book.toJSON()
-    callback(null, books)
+  Book
+    .find({}, bookFields)
+    .sort('index')
+    .lean()
+    .exec(callback)
 
 exports.getChapter = ({book, chapter}, callback) ->
   Verse.findOne {slug: book, chapter}, (err, verse) ->
     chapter =
+      book: verse.book
       slug:  "#{verse.slug}_#{verse.chapter}"
       number: verse.chapter
     callback(err, chapter)
@@ -28,12 +33,12 @@ exports.getChapters = ({book}, callback) ->
     chapters = _(chapters).sortBy(_.identity)
     chapters = _(chapters).uniq()
     chapters = chapters.map (chapter) ->
-      {number: chapter, slug: "#{book}_#{chapter}"}
+      {book: verses[0].book, number: chapter, slug: "#{book}_#{chapter}"}
     callback(err, chapters)
 
 exports.getVerse = ({book, chapter, verse}, callback) ->
   # _id: 0, verse: 1, slug: 1, chapter: 1, body: 1
-  Verse.findOne {book, chapter, verse}, (err, verseObj) ->
+  Verse.findOne {slug: book, chapter, verse}, (err, verseObj) ->
     _verse =
       slug: "#{book}_#{chapter}_#{verse}"
       number: verse

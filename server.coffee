@@ -22,7 +22,7 @@ app.get '/', (req, res) ->
 
 app.get '/books/:slug', (req, res) ->
   {slug} = req.params
-  goose.getBook {slug}, (err, book) ->
+  goose.getBook {book: slug}, (err, book) ->
     res.json(book)
 
 app.get '/books', (req, res) ->
@@ -30,8 +30,8 @@ app.get '/books', (req, res) ->
     res.json(books)
 
 app.get '/chapters/:slug', (req, res) ->
-  [slug, chapter] = req.params.slug.split('_')
-  goose.getChapter {slug, chapter}, (err, chapter) ->
+  [book, chapter] = req.params.slug.split('_')
+  goose.getChapter {book, chapter}, (err, chapter) ->
     res.json(chapter)
 
 app.get '/chapters', (req, res) ->
@@ -42,6 +42,10 @@ app.get '/chapters', (req, res) ->
 app.get '/verses', (req, res) ->
   {book, chapter} = req.query
   goose.getVerses {book, chapter}, (err, versus) ->
+    res.json(versus)
+
+app.get '/whoop', (req, res) ->
+  goose.getVerses {}, (err, versus) ->
     res.json(versus)
 
 app.get '/*', (req, res) ->
