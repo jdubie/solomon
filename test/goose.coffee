@@ -1,6 +1,6 @@
 should = require 'should'
 config = require '../config'
-goose = require '../goose'
+goose = require  '../goose'
 
 modelKeys =
   book:    ['slug', 'book', 'test', 'klass']
@@ -24,7 +24,7 @@ describe 'goose', ->
     it 'should return correct fields', (done) ->
       goose.getBooks {}, (err, books) ->
         should.not.exist(err)
-        books.should.have.length 66 # TODO should actually be longer
+        books.should.have.length 66
         book = books[0]
         testGenesis(book)
         done()

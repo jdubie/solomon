@@ -1,4 +1,9 @@
-all: wipe upload rename upload_books order_books
+all: test
+
+download:
+	NODE_PATH=. DEBUG=download coffee tasks/download.coffee
+
+setup_db: wipe upload rename upload_books order_books
 
 test:
 	./node_modules/.bin/mocha \
@@ -15,9 +20,6 @@ upload:
 
 upload_books:
 	coffee tasks/upload_books.coffee
-
-download:
-	NODE_PATH=. DEBUG=download coffee tasks/download.coffee
 
 solr-wipe:
 	NODE_PATH=. DEBUG=solr* coffee tasks/solr_wipe.coffee
