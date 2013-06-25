@@ -21,7 +21,7 @@ parseBook = (bookContent) ->
     line.match(titleExp)
   book = book.toLowerCase()
 
-  verseExp = /^ ?([0-9]+):([0-9]+): (.+)$/
+  verseExp = /^ *([0-9]+):([0-9]+): (.+)$/
   verses = _(bookContent).filter (line) ->
     line.match(verseExp)
   _(verses).map (line) ->
@@ -33,11 +33,10 @@ uploadVerse = (verse, callback) ->
   v.save(callback)
 
 uploadBook = (bookId, callback) ->
-  debug 'bookId', bookId
   readBook bookId, (err, bookBuffer) ->
     callback(err) if err
     verses = parseBook(bookBuffer)
-    debug 'verses', verses.length
+    debug bookId, 'verses', verses.length
     async.map(verses, uploadVerse, callback)
 
 ########################################

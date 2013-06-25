@@ -16,9 +16,15 @@ updateName = ({book, newBook}, callback) ->
   Verse.update({book}, { $set: { book: newBook }}, multi: true, callback)
 
 books = [
+  {book: "titus", slug: "titus", newBook: "Titus"}
+  {book: "galatians", slug: "galatians", newBook: "Galatians"}
+  {book: "romans", slug: "romans", newBook: "Romans"}
+  {book: "obadiah", slug: "obadiah", newBook: "Obadiah"}
+  {book: "ecclesiastes", slug: "ecclesiastes", newBook: "Ecclesiastes"}
   {book: "jeremiah ", slug: "jeremiah", newBook: "Jeremiah"}
   {book: "isaiah ", slug: "isaiah", newBook: "Isaiah"}
   {book: "st.mark", slug: "mark", newBook: "Mark"}
+  {book: "st. matthew", slug: "matthew", newBook: "Matthew"}
   {book: "daniel", slug: "daniel", newBook: "Daniel"}
   {book: "st. john ", slug: "john", newBook: "John"}
   {book: "psalms  ", slug: "psalms", newBook: "Psalms"}
@@ -44,6 +50,8 @@ books = [
   {book: "ezra", slug: "ezra", newBook: "Ezra"}
   {book: "first kings", slug: "1-kings", newBook: "1 Kings"}
   {book: "second kings", slug: "2-kings", newBook: "2 Kings"}
+  {book: "1 corinthians", slug: "1-corinthians", newBook: "1 Corinthians"}
+  {book: "2 corinthians", slug: "2-corinthians", newBook: "2 Corinthians"}
   {book: "first chronicles", slug: "1-chronicles", newBook: "1 Chronicles"}
   {book: "nehemiah", slug: "nehemiah", newBook: "Nehemiah"}
   {book: "esther", slug: "esther", newBook: "Esther"}
@@ -72,7 +80,7 @@ books = [
   {book: "second peter", slug: "2-peter", newBook: "2 Peter"}
   {book: "first john", slug: "1-john", newBook: "1 John"}
   {book: "second john", slug: "2-john", newBook: "2 John"}
-  {book: "third john", slug: "2-john", newBook: "2 John"}
+  {book: "third john", slug: "3-john", newBook: "3 John"}
   {book: "jude", slug: "jude", newBook: "Jude"}
   {book: "revelation", slug: "revelation", newBook: "Revelation"}
 ]
